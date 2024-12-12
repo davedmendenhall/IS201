@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Riddle Challenge</title>
+    <a href="../Final Project/index.html">My Resume</a>
+    <a href="../Final Project/scratch.html">Back to NFL Page</a>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f4f4f9, #d0e0f0);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        #riddle-box {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s;
+        }
+        #riddle-box:hover {
+            transform: scale(1.02);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .answer {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #007bff;
+            font-size: 1.2em;
+        }
+        .hint {
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+        }
+        #answer-input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 15px;
+            width: 80%;
+            max-width: 300px;
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+        #result.correct {
+            color: #28a745;
+        }
+        #result.incorrect {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Advanced Riddle Challenge</h1>
+    <div id="riddle-box">
+        <p id="riddle">Click the button to get a riddle!</p>
+        <p class="hint" id="hint" style="display: none;"></p>
+        <button onclick="generateRiddle()">Generate Riddle</button>
+        <br>
+        <input id="answer-input" type="text" placeholder="Enter your answer here" style="display: none;">
+        <button id="submit-answer" onclick="checkAnswer()" style="display: none;">Submit Answer</button>
+        <p id="result" style="display: none;"></p>
+        <button id="show-hint" onclick="showHint()" style="display: none;">Show Hint</button>
+    </div>
+
+    <script>
+        const riddles = [
+            { question: "What has keys but can’t open locks?", hint: "It produces music.", answer: "A piano" },
+            { question: "What has to be broken before you can use it?", hint: "Think of something fragile.", answer: "An egg" },
+            { question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", hint: "It’s something you hear in mountains.", answer: "An echo" },
+            { question: "The more of this there is, the less you see. What is it?", hint: "It often comes at night.", answer: "Darkness" },
+            { question: "What can travel around the world while staying in the same spot?", hint: "It’s sticky and small.", answer: "A stamp" },
+            { question: "What begins with an E but only has one letter?", hint: "It’s often mailed.", answer: "An envelope" },
+            { question: "I’m light as a feather, yet the strongest person can’t hold me for five minutes. What am I?", hint: "You need it to live.", answer: "Your breath" }
+        ];
+
+        let currentRiddle = null;
+
+        function generateRiddle() {
+            const randomIndex = Math.floor(Math.random() * riddles.length);
+            currentRiddle = riddles[randomIndex];
+
+            document.getElementById('riddle').textContent = currentRiddle.question;
+            document.getElementById('hint').textContent = `Hint: ${currentRiddle.hint}`;
+            document.getElementById('hint').style.display = 'none';
+            document.getElementById('answer-input').style.display = 'inline-block';
+            document.getElementById('submit-answer').style.display = 'inline-block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('show-hint').style.display = 'inline-block';
+            document.getElementById('answer-input').value = '';
+        }
+
+        function showHint() {
+            document.getElementById('hint').style.display = 'block';
+            document.getElementById('show-hint').style.display = 'none';
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
+            const correctAnswer = currentRiddle.answer.toLowerCase();
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer === correctAnswer) {
+                resultElement.textContent = "Correct! Great job!";
+                resultElement.className = 'correct';
+            } else {
+                resultElement.textContent = `Incorrect. The correct answer is: "${currentRiddle.answer}".`;
+                resultElement.className = 'incorrect';
+            }
+
+            resultElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
